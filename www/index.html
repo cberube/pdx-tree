@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Angular Tree Test Page</title>
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+
+    <style>
+        .pdx-tree {
+            padding-left: 0;
+        }
+
+        .pdx-tree li {
+            list-style-type: none;
+        }
+
+        .pdx-tree ul {
+            padding-left: 1.5em;
+        }
+
+        .pdx-tree-icon {
+            margin-right: 0.5em;
+            color: #aaa;
+            text-shadow: 1px 1px #ddd;
+        }
+
+        .pdx-tree-name:hover {
+            background-color: #FFFFA0;
+            cursor: pointer;
+        }
+
+        .pdx-tree-name {
+            -webkit-user-select: none;
+        }
+    </style>
+</head>
+
+<body ng-app="PdxTreeTestApp">
+    <form>
+        <div ng-controller="PdxTreeTestCtrl">
+            <div pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree" item-list="nodes"></div>
+        </div>
+    </form>
+
+    <script type="application/javascript" src="lib/angular/angular.min.js"></script>
+    <script type="application/javascript" src="lib/angular-resource/angular-resource.min.js"></script>
+    <script type="application/javascript" src="src/pdx-tree/PdxTree.js"></script>
+    <script type="application/javascript" src="js/PdxTreeTest.js"></script>
+</body>
+
+</html>
