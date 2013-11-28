@@ -14,7 +14,7 @@ module.exports = function(config){
       'bower_components/angular-scenario/angular-scenario.js'
     ],
 
-    autoWatch : true,
+    autoWatch : false,
 
     frameworks: ['jasmine'],
 
