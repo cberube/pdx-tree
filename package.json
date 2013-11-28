@@ -1,0 +1,21 @@
+{
+  "name": "PdxTree",
+  "private": true,
+  "description": "A tree view directive for AngularJS",
+  "repository": "https://github.com/cberube/PdxTree",
+  "devDependencies": {
+    "phantomjs": "~1.9.2-4",
+    "karma": "~0.10.6",
+    "karma-junit-reporter": "~0.2.1",
+    "karma-jasmine": "~0.1.3",
+    "karma-ng-scenario": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.1",
+    "karma-firefox-launcher": "~0.1.1",
+    "karma-phantomjs-launcher": "~0.1.1",
+    "karma-script-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-coffee-preprocessor": "~0.1.1",
+    "requirejs": "~2.1.9",
+    "karma-requirejs": "~0.2.0"
+  }
+}
