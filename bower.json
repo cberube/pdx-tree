@@ -12,7 +12,8 @@
     "node_modules",
     "example",
     "test",
-    "tests"
+    "bower_components",
+    "scripts"
   ],
   "dependencies": {
     "angular": "~1.2.3",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "angular-mocks": "~1.2.3",
     "angular-scenario": "~1.2.3",
-    "bootstrap": "~3.0.2"
+    "bootstrap": "~3.0.2",
+    "angular-loader": "~1.2.3"
   }
 }

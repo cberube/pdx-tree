@@ -44,3 +44,7 @@ bower install
 `grunt dev`
 
 Now change or save any `src/**/*.js` or `test/unit/**/*.js` file to see the tests run.
+
+**Build Process**
+
+Work with the separated files, and use `grunt concat` or `grunt concat:dist` to concatenate the files into a distributable package. The `concat` config in Gruntfile.js manages the list of files to concatenate.

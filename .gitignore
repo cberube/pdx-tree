@@ -19,6 +19,3 @@ results
 
 npm-debug.log
 node_modules
-
-# JS Lib ignore
-bower_components

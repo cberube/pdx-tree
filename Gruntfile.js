@@ -6,6 +6,21 @@ module.exports = function(grunt) {
     var port = 8981;
 
     grunt.initConfig({
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: [
+                    'src/pdx-tree.js',
+                    'src/services/PdxTreeChildManagerService.js',
+                    'src/directives/PdxTree.js',
+                    'src/directives/PdxTreeBranch.js',
+                    'src/directives/PdxTreeItem.js'
+                ],
+                dest: 'pdx-tree.js'
+            }
+        },
         connect: {
             server: {
                 options: {
@@ -28,6 +43,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
