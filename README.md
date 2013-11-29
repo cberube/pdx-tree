@@ -8,7 +8,6 @@ A quick example of PdxTree functionality and config is available in `example/` d
 
 ```
 cd PdxTree/
-bower install
 ./scripts/web-server.js
 ```
 
@@ -18,7 +17,6 @@ Navigate to <http://127.0.0.1:8000/example/index.html>
 
 ```
 cd PdxTree/
-bower install
 grunt example
 ```
 
