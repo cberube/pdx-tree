@@ -1,7 +1,9 @@
 "use strict";
 
+angular.module('pdx', []);
+
 angular
-    .module('pdxTree', [])
+    .module('pdx')
     .provider(
         'pdxTreeChildManagerService',
         function() {

@@ -4,9 +4,9 @@
  */
 
 describe('version', function() {
-  beforeEach(module('pdxTree.version'));
+    beforeEach(module('pdxTree.version'));
 
-  it('should return current version', inject(function(version) {
-    expect(version).toEqual('0.0.2');
-  }));
+    it('should return current version', inject(function(version) {
+        expect(version).toEqual('0.0.2');
+    }));
 });
