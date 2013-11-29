@@ -9,7 +9,7 @@ describe('pdxTreeChildManagerService', function() {
         mockConfig;
 
     beforeEach(function() {
-        module('pdx');
+        module('pdxTree');
         mockNode = {foo: 'bar'};
         mockConfig = {};
     });
