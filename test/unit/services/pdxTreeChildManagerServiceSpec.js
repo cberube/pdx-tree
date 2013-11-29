@@ -79,9 +79,9 @@ describe('pdxTreeChildManagerService', function() {
             expect(pdxTreeChildManagerService.areChildrenLoading(itemList)).toBe(false);
         }));
 
-        it('handles a promise returned by $resource, by returning the inverse of $resolved', function() {
+        it('handles a promise returned by $resource, by returning the inverse of $resolved', inject(function(pdxTreeChildManagerService) {
             var itemList = {$resolved: true};
-
-        });
+            expect(pdxTreeChildManagerService.areChildrenLoading(itemList)).toBe(false);
+        }));
     });
 });
