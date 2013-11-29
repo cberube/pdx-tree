@@ -5,7 +5,7 @@
     "Charles Berube <cberube@gmail.com>"
   ],
   "description": "Tree control for AngularJS",
-  "main": "www/index.html",
+  "main": "pdx-tree.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
