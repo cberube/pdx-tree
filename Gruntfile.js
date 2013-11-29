@@ -33,4 +33,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('dev', ['karma:unit', 'watch']);
+    grunt.registerTask('example', ['connect:server:keepalive']);
 };

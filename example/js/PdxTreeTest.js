@@ -5,7 +5,7 @@ angular
         [
             '$scope', '$resource',
             function($scope, $resource) {
-                var Children = $resource('children.php');
+                var Children = $resource('tree-data/:nodeId.json');
 
                 $scope.treeConfiguration = {
                     loadChildren: function(node, defaultLoadChildren) {
