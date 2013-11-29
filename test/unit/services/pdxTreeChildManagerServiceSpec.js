@@ -2,7 +2,7 @@
  * Created by nackjicholson on 11/28/13.
  */
 
-describe('pdxTreeChildManagerService', function() {
+describe('PdxTreeChildManagerService', function() {
     "use strict";
 
     var mockNode,
@@ -18,10 +18,6 @@ describe('pdxTreeChildManagerService', function() {
         mockNode = undefined;
         mockConfig = undefined;
     });
-
-    it('something', inject(function(pdxTreeChildManagerService) {
-        expect(typeof pdxTreeChildManagerService).toBe('object');
-    }));
 
     describe('.loadChildren()', function() {
         it('calls config.loadChildren with node and noop', inject(function(pdxTreeChildManagerService) {
