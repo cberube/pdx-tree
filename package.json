@@ -3,6 +3,9 @@
   "private": true,
   "description": "A tree view directive for AngularJS",
   "repository": "https://github.com/cberube/PdxTree",
+  "scripts": {
+      "test": "grunt test"
+  },
   "devDependencies": {
     "phantomjs": "~1.9.2-4",
     "karma": "~0.10.6",
