@@ -2,6 +2,8 @@
 
 > An AngularJS tree directive for loading tree and node data on demand.
 
+[![Build Status](https://secure.travis-ci.org/nackjicholson/PdxTree.png?branch=master)](https://travis-ci.org/nackjicholson/PdxTree)
+
 ## Example
 
 A quick example of PdxTree functionality and config is available in `example/` directory of this repository.
