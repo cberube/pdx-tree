@@ -41,7 +41,7 @@ bower install
 
 **Watch Task for tests**
 
-`grunt dev`
+`grunt devmode`
 
 Now change or save any `src/**/*.js` or `test/unit/**/*.js` file to see the tests run.
 
