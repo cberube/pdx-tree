@@ -34,5 +34,4 @@ module.exports = function(config){
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
     }
-
-})}
+})};

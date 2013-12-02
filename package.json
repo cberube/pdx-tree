@@ -1,5 +1,5 @@
 {
-  "name": "PdxTree",
+  "name": "pdx-tree",
   "private": true,
   "description": "A tree view directive for AngularJS",
   "repository": "https://github.com/cberube/PdxTree",
@@ -24,6 +24,7 @@
     "grunt-contrib-connect": "~0.5.0",
     "grunt-karma": "~0.6.2",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.7"
   }
 }

@@ -6,9 +6,10 @@ module.exports = function(grunt) {
     var port = 8981;
 
     grunt.initConfig({
+        "pkg": grunt.file.readJSON('package.json'),
         concat: {
             options: {
-                separator: ';'
+                'stripBanners': true
             },
             dist: {
                 src: [
@@ -18,7 +19,7 @@ module.exports = function(grunt) {
                     'src/directives/PdxTreeBranch.js',
                     'src/directives/PdxTreeItem.js'
                 ],
-                dest: 'pdx-tree.js'
+                dest: 'dist/<%= pkg.name %>.js'
             }
         },
         connect: {
@@ -34,8 +35,20 @@ module.exports = function(grunt) {
                 configFile: 'config/karma.conf.js',
                 background: true
             },
+            "unit-dist": {
+                configFile: 'config/karma-dist.conf.js',
+                singleRun: true,
+                background: false,
+                browsers: ['PhantomJS']
+            },
+            "unit-dist-min": {
+                configFile: 'config/karma-dist-min.conf.js',
+                singleRun: true,
+                background: false,
+                browsers: ['PhantomJS']
+            },
             travis: {
-                configFile: 'config/karma.conf.js',
+                configFile: 'config/karma-travis.conf.js',
                 singleRun: true,
                 browsers: ['PhantomJS']
             }
@@ -45,10 +58,21 @@ module.exports = function(grunt) {
                 files: ['src/**/*.js', 'test/unit/**/*.js'],
                 tasks: ['karma:unit:run']
             }
+        },
+        "uglify": {
+            "dist": {
+                "files": {
+                    "dist/<%= pkg.name %>.min.js": ["<%= concat.dist.dest %>"]
+                }
+            },
+            "options": {
+                "mangle": false
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
@@ -56,4 +80,5 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', ['karma:unit', 'watch']);
     grunt.registerTask('test', ['karma:travis']);
     grunt.registerTask('example', ['connect:server:keepalive']);
+    grunt.registerTask('dist', ['concat', 'uglify', 'karma:unit-dist', 'karma:unit-dist-min']);
 };
