@@ -16,16 +16,16 @@ angular
                                 { id: "Foo3", name: "Foo-child-3" }
                             ];
 
-                            return;
+                            return true;
                         }
 
                         if (node.id === 'Flob' && node.childList == null) {
                             node.childList = Children.query({ nodeId: node.id });
 
-                            return;
+                            return node.childList.$promise;
                         }
 
-                        defaultLoadChildren(node);
+                        return defaultLoadChildren(node);
                     },
 
                     hasChildren: function(node, defaultHasChildren) {

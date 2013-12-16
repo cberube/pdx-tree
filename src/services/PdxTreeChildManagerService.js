@@ -14,8 +14,10 @@ angular.module('pdxTree').provider(
 
             var loadChildren = function(node, config) {
                 if (config && angular.isFunction(config.loadChildren)) {
-                    config.loadChildren(node, angular.noop);
+                    return config.loadChildren(node, angular.noop);
                 }
+
+                return null;
             };
 
             var hasChildren = function(node, config) {
