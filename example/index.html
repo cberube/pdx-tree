@@ -40,7 +40,36 @@
 <body ng-app="PdxTreeTestApp">
     <form>
         <div ng-controller="PdxTreeTestCtrl">
-            <div pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree" item-list="nodes"></div>
+            <h1>PDX Tree</h1>
+
+            <h2>Nested list example</h2>
+            <ul pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree" item-list="nodes">
+                <li pdx-tree-item>
+                    <a ng-click="toggleChildren(node)">{{ node.name }}</a> (Expanded? {{ !!node.expanded }})
+                    <ul pdx-tree-children></ul>
+                </li>
+            </ul>
+
+            <h2>Flat example</h2>
+            <div pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree list-group" item-list="nodes">
+                <div pdx-tree-item class="list-group-item"><a ng-click="toggleChildren(node)">{{ node.name }}</a> (Expanded? {{ !!node.expanded }})</div>
+                <div pdx-tree-children></div>
+            </div>
+
+            <!--
+            <h2>Table example</h2>
+            <table pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree list-group" item-list="nodes">
+                <tr pdx-tree-item>
+                    <td>
+                        <a ng-click="toggleChildren(node)">{{ node.name }}</a>
+                    </td>
+                    <td>
+                        {{ !!node.expanded }}
+                    </td>
+                </tr>
+                <tr pdx-tree-children></tr>
+            </table>
+            -->
         </div>
     </form>
 
@@ -48,9 +77,9 @@
     <script type="application/javascript" src="../bower_components/angular-resource/angular-resource.min.js"></script>
     <!--<script type="application/javascript" src="../dist/pdx-tree.js"></script>-->
     <script type="application/javascript" src="../src/pdx-tree.js"></script>
+    <!--<script type="application/javascript" src="../src/directives/PdxTree_x.js"></script>-->
     <script type="application/javascript" src="../src/directives/PdxTree.js"></script>
-    <script type="application/javascript" src="../src/directives/PdxTreeBranch.js"></script>
-    <script type="application/javascript" src="../src/directives/PdxTreeItem.js"></script>
+    <!--<script type="application/javascript" src="../src/directives/PdxTreeItem.js"></script>-->
     <script type="application/javascript" src="../src/services/PdxTreeChildManagerService.js"></script>
     <script type="application/javascript" src="js/PdxTreeTest.js"></script>
 </body>
