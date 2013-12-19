@@ -44,74 +44,72 @@ angular.module('pdxTree').directive(
                 }
             };
 
-            var buildBranch = function(scope, treeConfig, container, node) {
-                var itemTemplate = scope.itemTemplate;
-                var childContainerTemplate;
-                var itemScope;
+            var loadChildren = function(node) {
+                return childManagerService.loadChildren(node, this.pdxTreeConfig);
+            };
 
-                itemTemplate = $compile(itemTemplate);
+            var renderChildren = function(itemScope) {
+                if (!itemScope.node.expanded) {
+                    return;
+                }
 
-                itemScope = $rootScope.$new();
-
-                itemScope.toggleChildren = toggleChildren;
-                itemScope.treeConfig = treeConfig;
-                itemScope.itemTemplate = angular.element(scope.itemTemplate).clone();
-                itemScope.siblingChildContainerTemplate = angular.element(scope.siblingChildContainerTemplate).clone();
-
-                itemScope.loadChildren = function(node) {
-                    return childManagerService.loadChildren(node, treeConfig);
-                };
-
-                itemScope.node = node;
-
-                itemTemplate(
-                    itemScope,
-                    function(clone, cloneScope) {
-                        var containerElement;
-                        var childContainerElement;
-
-                        container.append(clone);
-
-                        // If the child container is a sibling of the item, we handle that by appending a compiled
-                        // version of a clone of the child container template to the item node; if the node is
-                        if (cloneScope.siblingChildContainerTemplate) {
-                            childContainerTemplate = $compile(angular.element(cloneScope.siblingChildContainerTemplate).clone());
-                            containerElement = childContainerTemplate(cloneScope);
-
-                            container.append(containerElement);
-                        } else {
-                            // Find the element that should contain the children
-                            childContainerElement = findChildWithAttribute(clone, 'pdx-tree-children');
-                            childContainerTemplate = $compile(angular.element(childContainerElement));
-
-                            containerElement = childContainerTemplate(cloneScope);
-                            angular.element(childContainerElement).replaceWith(containerElement);
-                        }
-
-                        // Store the child container element for later use
-                        itemScope.childContainer = containerElement;
-
-                        // When we first create the child container we need to render the child nodes,
-                        // if the list is valid and the node is expanded
-                        renderNodeList(treeConfig, itemScope);
-
-                        // Whenever the child list changes, we need to re-render the child list
-                        cloneScope.$watch(
-                            'node.childList',
-                            angular.bind(this, renderNodeList, treeConfig, itemScope)
-                        );
-
-                        // Whenever the node is expanded or collapsed, we need to re-render the child list
-                        cloneScope.$watch(
-                            'node.expanded',
-                            angular.bind(this, renderNodeList, treeConfig, itemScope)
-                        );
-
+                angular.forEach(
+                    itemScope.node.childList,
+                    function(child) {
+                        itemScope.containerElement.append(createItemElement(itemScope, child));
                     }
                 );
             };
 
-            var findChildWithAttribute = function(parent, attribute) {
+            var createItemElement = function(scope, node) {
+                var itemTemplate = $compile(scope.itemTemplate.clone());
+                var itemScope = scope.$new();
+                var itemElement;
+                var containerElement;
+                var childContainerTemplate;
+                var childContainerElement;
+
+                itemScope.node = node;
+                itemScope.itemTemplate = scope.itemTemplate.clone();
+
+                itemElement = itemTemplate(itemScope);
+
+                // If the child container is a sibling of the item, we handle that by appending a compiled
+                // version of a clone of the child container template to the item node; if the node is
+                if (itemScope.siblingChildContainerTemplate) {
+                    childContainerTemplate = $compile(angular.element(itemScope.siblingChildContainerTemplate).clone());
+                    containerElement = childContainerTemplate(itemScope);
+
+                    //itemElement.append(containerElement);
+                    itemElement.append('<div>YYYY</div>');
+                } else {
+                    // Find the element that should contain the children
+                    childContainerElement = findChildWithAttribute(itemElement, 'pdx-tree-children');
+                    childContainerTemplate = $compile(angular.element(childContainerElement));
+
+                    containerElement = childContainerTemplate(itemScope);
+                    //angular.element(childContainerElement).replaceWith(containerElement);
+                    angular.element(childContainerElement).replaceWith('<div>XXXX</div>');
+                }
+
+                itemScope.containerElement = containerElement;
+
+                // Whenever the node is expanded or collapsed, we need to re-render the child list
+                itemScope.$watch(
+                    'node.expanded',
+                    angular.bind(itemScope, renderChildren, itemScope)
+                );
+
+                // Whenever the child list changes, we need to re-render the child list
+                itemScope.$watch(
+                    'node.childList',
+                    angular.bind(itemScope, renderChildren, itemScope)
+                );
+
+                return itemElement;
+            };
+
+            var findChildWithAttribute = function(parent, attribute, recursive) {
                 var children = parent.children();
                 var attributeValue;
                 var childrenSearchResult = null;
@@ -124,10 +122,12 @@ angular.module('pdxTree').directive(
                         return children[i];
                     }
 
-                    childrenSearchResult = findChildWithAttribute(angular.element(children[i]), attribute);
+                    if (recursive) {
+                        childrenSearchResult = findChildWithAttribute(angular.element(children[i]), attribute, false);
 
-                    if (childrenSearchResult !== null) {
-                        return childrenSearchResult;
+                        if (childrenSearchResult !== null) {
+                            return childrenSearchResult;
+                        }
                     }
                 }
 
@@ -149,6 +149,8 @@ angular.module('pdxTree').directive(
 
                     scope.itemTemplate = angular.element(findChildWithAttribute(element, 'pdx-tree-item'));
                     scope.siblingChildContainerTemplate = null;
+                    scope.toggleChildren = toggleChildren;
+                    scope.loadChildren = angular.bind(scope, loadChildren);
 
                     // Search through the child elements recursively until we find the pdx-tree-children element
                     siblingChildContainer = findChildWithAttribute(element, 'pdx-tree-children');
@@ -159,7 +161,8 @@ angular.module('pdxTree').directive(
 
                     element.html('');
                     angular.forEach(scope.itemList, function(node) {
-                        buildBranch(scope, scope.pdxTreeConfig, element, node);
+                        element.append(createItemElement(scope, node));
+                        //buildBranch(scope, scope.pdxTreeConfig, element, node);
                     });
                 }
             };
