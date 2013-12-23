@@ -2,5 +2,6 @@
     "globals": {
         "angular": false,
         "describe": false
-    }
+    },
+    "eqnull": true
 }
