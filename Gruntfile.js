@@ -15,9 +15,8 @@ module.exports = function(grunt) {
                 src: [
                     'src/pdx-tree.js',
                     'src/services/PdxTreeChildManagerService.js',
-                    'src/directives/PdxTree_x.js',
+                    'src/services/PdxTreeDomService.js',
                     'src/directives/PdxTree.js',
-                    'src/directives/PdxTreeItem.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }

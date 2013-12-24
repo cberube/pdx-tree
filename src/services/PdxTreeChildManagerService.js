@@ -1,32 +1,8 @@
-/**
- * Created by nackjicholson on 11/29/13.
- */
-
-angular.module('pdxTree').provider(
+angular.module('pdxTree').service(
     'pdxTreeChildManagerService',
     [
         function() {
             "use strict";
-
-            var defaultHasChildren = function(node) {
-                return (angular.isArray(node.childList) && node.childList.length > 0);
-            };
-
-            var loadChildren = function(node, config) {
-                if (config && angular.isFunction(config.loadChildren)) {
-                    return config.loadChildren(node, angular.noop);
-                }
-
-                return null;
-            };
-
-            var hasChildren = function(node, config) {
-                if (config && angular.isFunction(config.hasChildren)) {
-                    return config.hasChildren(node, defaultHasChildren);
-                }
-
-                return defaultHasChildren(node);
-            };
 
             var areChildrenLoading = function(itemList) {
                 //  If the child list is set to false explicitly, there will never
@@ -46,14 +22,13 @@ angular.module('pdxTree').provider(
                 return (!angular.isArray(itemList));
             };
 
-            function PdxTreeChildLoader() {
-                this.loadChildren = loadChildren;
-                this.hasChildren = hasChildren;
-                this.areChildrenLoading = areChildrenLoading;
-            }
+            var hasChildren = function(node) {
+                return (node && node.childList && angular.isArray(node.childList) && node.childList.length > 0);
+            };
 
-            this.$get = function() {
-                return new PdxTreeChildLoader();
+            return {
+                "hasChildren": hasChildren,
+                "areChildrenLoading": areChildrenLoading
             };
         }
     ]

@@ -19,21 +19,6 @@
         .pdx-tree ul {
             padding-left: 1.5em;
         }
-
-        .pdx-tree-icon {
-            margin-right: 0.5em;
-            color: #aaa;
-            text-shadow: 1px 1px #ddd;
-        }
-
-        .pdx-tree-name:hover {
-            background-color: #FFFFA0;
-            cursor: pointer;
-        }
-
-        .pdx-tree-name {
-            -webkit-user-select: none;
-        }
     </style>
 </head>
 
@@ -43,44 +28,46 @@
             <h1>PDX Tree</h1>
 
             <h2>Nested list example</h2>
-            <ul pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree" item-list="nodes">
+            <ul pdx-tree pdx-tree-options="treeOptions" class="pdx-tree" pdx-tree-node-list="nodes">
                 <li pdx-tree-item>
-                    <a ng-click="toggleChildren(node)">{{ node.name }}</a> (Expanded? {{ !!node.expanded }})
+                    <span ng-class="pdxTreeOptions.getNodeIcon(node)" class="glyphicon"></span>
+                    <a ng-click="toggleChildren(node)">{{ node.name }}</a>
                     <ul pdx-tree-children></ul>
                 </li>
             </ul>
 
             <h2>Flat example</h2>
-            <div pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree list-group" item-list="nodes">
-                <div pdx-tree-item class="list-group-item"><a ng-click="toggleChildren(node)">{{ node.name }}</a> (Expanded? {{ !!node.expanded }})</div>
+            <div pdx-tree pdx-tree-options="treeOptions" class="pdx-tree list-group" pdx-tree-node-list="nodes">
+                <a pdx-tree-item class="list-group-item" ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)" ng-click="toggleChildren(node)">
+                    <span ng-class="pdxTreeOptions.getAlternateNodeIcon(node)" class="glyphicon"></span>
+                    {{ node.name }}
+                    <div class="pull-right">
+                        <div class="label label-default">{{pdxTreeNodeDepth}}</div>
+                        <div class="label label-info" ng-bind="pdxTreeOptions.getChildCount(node)"></div>
+                    </div>
+                </a>
                 <div pdx-tree-children></div>
             </div>
-
-            <!--
-            <h2>Table example</h2>
-            <table pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree list-group" item-list="nodes">
-                <tr pdx-tree-item>
-                    <td>
-                        <a ng-click="toggleChildren(node)">{{ node.name }}</a>
-                    </td>
-                    <td>
-                        {{ !!node.expanded }}
-                    </td>
-                </tr>
-                <tr pdx-tree-children></tr>
-            </table>
-            -->
         </div>
     </form>
 
-    <script type="application/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="application/javascript" src="../bower_components/angular/angular.js"></script>
     <script type="application/javascript" src="../bower_components/angular-resource/angular-resource.min.js"></script>
-    <!--<script type="application/javascript" src="../dist/pdx-tree.js"></script>-->
+
+    <!-- Distribution version -->
+    <!--
+    <script type="application/javascript" src="../dist/pdx-tree.min.js"></script>
+    -->
+
+    <!-- Development version -->
     <script type="application/javascript" src="../src/pdx-tree.js"></script>
-    <!--<script type="application/javascript" src="../src/directives/PdxTree_x.js"></script>-->
     <script type="application/javascript" src="../src/directives/PdxTree.js"></script>
-    <!--<script type="application/javascript" src="../src/directives/PdxTreeItem.js"></script>-->
+    <script type="application/javascript" src="../src/services/PdxTreeDomService.js"></script>
     <script type="application/javascript" src="../src/services/PdxTreeChildManagerService.js"></script>
+    <!--
+    -->
+
+    <!-- Test controller -->
     <script type="application/javascript" src="js/PdxTreeTest.js"></script>
 </body>
 

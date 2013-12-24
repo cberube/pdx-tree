@@ -1,7 +1,7 @@
 {
-  "name": "angular-loader",
+  "name": "angular-sanitize",
   "version": "1.2.7-build.2026+sha.7d6e5a2",
-  "main": "./angular-loader.js",
+  "main": "./angular-sanitize.js",
   "dependencies": {
     "angular": "1.2.7-build.2026+sha.7d6e5a2"
   }
