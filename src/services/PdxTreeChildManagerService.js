@@ -26,9 +26,38 @@ angular.module('pdxTree').service(
                 return (node && node.childList && angular.isArray(node.childList) && node.childList.length > 0);
             };
 
+            var renderChildren = function(itemScope) {
+                var childElementList;
+
+                itemScope.childStrategy.removeChildren(itemScope);
+
+                // If we are not expanded, or we are an empty node, we have nothing more to do
+                if (!itemScope.node.expanded || !itemScope.node.childList) {
+                    return;
+                }
+
+                // If our children are still loading, we need to call renderChildren again when
+                // the promise related to loading the children resolves, but until then, we have
+                // nothing to do
+                if (itemScope.node.childList.$promise && !itemScope.node.childList.$resolved) {
+                    itemScope.node.childList.$promise.then(angular.bind(this, renderChildren, itemScope));
+                    return;
+                }
+
+                angular.forEach(
+                    itemScope.node.childList,
+                    function(child) {
+                        childElementList = itemScope.childStrategy.createItem(itemScope, child);
+                        itemScope.childStrategy.addChildren(itemScope, childElementList);
+                    }
+                );
+
+            };
+
             return {
                 "hasChildren": hasChildren,
-                "areChildrenLoading": areChildrenLoading
+                "areChildrenLoading": areChildrenLoading,
+                "renderChildren": renderChildren
             };
         }
     ]
