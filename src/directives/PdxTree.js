@@ -32,14 +32,17 @@ angular.module('pdxTree').directive(
                         $scope.childTemplate = childTemplate;
                     };
                 },
-                link: function(scope, element) {
+                link: function(scope) {
+                    var targetElement = scope.itemTemplate.parent();
+
                     scope.toggleChildren = toggleChildren;
                     scope.loadChildren = scope.pdxTreeOptions.loadChildren || function() { return false; };
                     scope.pdxTreeNodeDepth = 0;
 
-                    element.html('');
+                    targetElement.html('');
+
                     angular.forEach(scope.pdxTreeNodeList, function(node) {
-                        pdxTreeDomService.appendAllElements(element, scope.childStrategy.createItem(scope, node));
+                        pdxTreeDomService.appendAllElements(targetElement, scope.childStrategy.createItem(scope, node));
                     });
                 }
             };

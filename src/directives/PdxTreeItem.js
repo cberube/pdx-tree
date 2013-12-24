@@ -10,11 +10,11 @@ angular.module('pdxTree').directive(
                         return $scope.element;
                     };
                 },
-                link: function(scope, element, attrs, pdxTree) {
+                link: function(scope, element, attributes, pdxTree) {
                     scope.element = element;
 
                     if (pdxTree) {
-                        pdxTree.setItemTemplate(element);
+                        pdxTree.setItemTemplate(angular.element(element));
                     }
                 }
             };

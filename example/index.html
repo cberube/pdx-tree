@@ -48,6 +48,24 @@
                         </div>
                     </a>
                 </div>
+
+                <h2>Table example</h2>
+                <table pdx-tree pdx-tree-options="treeOptions" class="table table-striped" pdx-tree-node-list="nodes">
+                    <thead>
+                        <tr>
+                            <th>Node</th>
+                            <th>Depth</th>
+                            <th>Children</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr pdx-tree-item pdx-tree-children>
+                            <td ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)"><a ng-click="toggleChildren(node)">{{ node.name }}</a></td>
+                            <td>{{pdxTreeNodeDepth}}</td>
+                            <td>{{pdxTreeOptions.getChildCount(node)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </form>
     </div>
