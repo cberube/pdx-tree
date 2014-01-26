@@ -10,13 +10,17 @@ angular
                 var stateIconMap = {
                     'open': 'glyphicon-chevron-down',
                     'closed': 'glyphicon-chevron-right',
-                    'leaf': ''
+                    'leaf': 'glyphicon-record'
                 };
 
                 var alternateStateIconMap = {
                     'open': 'glyphicon-folder-open',
                     'closed': 'glyphicon-folder-close',
-                    'leaf': ''
+                    'leaf': 'glyphicon-record'
+                };
+
+                var describeNode = function(node) {
+                    return node.name;
                 };
 
                 var loadChildren = function(node) {
@@ -36,6 +40,7 @@ angular
                         return node.childList.$promise;
                     }
 
+                    node.childList = false;
                     return false;
                 };
 
@@ -83,10 +88,12 @@ angular
                     "getNodeIcon": angular.bind(this, getNodeIcon, stateIconMap),
                     "getAlternateNodeIcon": angular.bind(this, getNodeIcon, alternateStateIconMap),
                     "getNodePadding": getNodePadding,
-                    "getChildCount": getChildCount
+                    "getChildCount": getChildCount,
+                    "describeNode": describeNode
                 };
 
-                $scope.nodes = [
+                /*
+                $scope.nodeContainer = { nodeList: [
                     { id: "Foo", name: "Foo" },
                     { id: "Bar", name: "Bar", childList: false },
                     {
@@ -104,7 +111,18 @@ angular
                         ]
                     },
                     { id: "Flob", name: "Flob" }
-                ];
+                ] };
+                */
+
+                $scope.nodeContainer = {};
+
+                $scope.nodeContainer.nodeList = Children.query({ nodeId: 'Nodes'});
+
+                $scope.addNode = function() {
+                    var now = new Date();
+
+                    $scope.nodeContainer.nodeList.push({ name: now.toISOString() });
+                };
             }
         ]
     )

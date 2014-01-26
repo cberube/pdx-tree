@@ -11,10 +11,20 @@ angular.module('pdxTree').directive(
                     };
                 },
                 link: function(scope, element, attributes, pdxTree) {
+                    var templateHtml = angular.element(element).clone();
+
                     scope.element = element;
 
+                    if (element[0].tagName == 'TBODY') {
+                        templateHtml = angular.element(element).clone();
+                        if (pdxTree) {
+                            pdxTree.setTableMode(false);
+                        }
+                    }
+
                     if (pdxTree) {
-                        pdxTree.setItemTemplate(angular.element(element));
+                        pdxTree.setItemTemplate(templateHtml);
+                        pdxTree.setItemContainer(element);
                     }
                 }
             };

@@ -3,6 +3,24 @@ angular.module('pdxTree').service(
     [
         '$compile', 'pdxTreeChildManagerService',
         function($compile, pdxTreeChildManagerService) {
+            var removeChildren = function(itemScope) {
+                angular.forEach(itemScope.childElementList, function(childElement) {
+                    childElement = angular.element(childElement);
+                    var childScope = childElement.scope();
+
+                    if (childScope) {
+                        removeChildren(childScope);
+                        childScope.$destroy();
+                    }
+
+                    childElement.remove();
+                });
+
+
+                itemScope.childElementList = [];
+                itemScope.lastChildElement = itemScope.itemElement;
+            };
+
             var siblingImplementation = {
                 name: "sibling",
 
@@ -10,22 +28,7 @@ angular.module('pdxTree').service(
                  * Remove the children from the child container on the item scope
                  * @param itemScope
                  */
-                removeChildren: function(itemScope) {
-                    angular.forEach(itemScope.childElementList, function(childElement) {
-                        childElement = angular.element(childElement);
-                        var childScope = childElement.scope();
-
-                        if (childScope) {
-                            childScope.childStrategy.removeChildren(childScope);
-                        }
-
-                        childElement.remove();
-                    });
-
-
-                    itemScope.childElementList = [];
-                    itemScope.lastChildElement = itemScope.itemElement;
-                },
+                removeChildren: removeChildren,
 
                 /**
                  * Add the list of child elements to the child container for the given
@@ -40,31 +43,34 @@ angular.module('pdxTree').service(
                 },
 
                 createItem: function(scope, node) {
-                    var itemTemplate = $compile(scope.itemTemplate.clone());
+                    var itemTemplate = $compile(scope.itemTemplate);
                     var itemScope = scope.$new();
                     var itemElement;
-                    var containerElement;
-                    var childContainerTemplate;
                     var elementList = [];
 
                     itemScope.node = node;
-                    itemScope.itemTemplate = scope.itemTemplate.clone();
+                    itemScope.itemTemplate = scope.itemTemplate;
                     itemScope.pdxTreeNodeDepth = scope.pdxTreeNodeDepth + 1;
                     itemScope.childElementList = [];
+                    itemScope.childStrategy = siblingImplementation;
 
-                    itemElement = itemTemplate(itemScope);
+                    itemElement = itemTemplate(
+                        itemScope,
+                        function(element, scope) {
+                            scope.childStrategy = siblingImplementation;
+                            scope.lastChildElement = element;
+                        }
+                    );
+
+                    // In table mode, we need to peel off a layer of table tags to get to the TR tags
+                    if (scope.tableMode) {
+                        itemElement = itemElement.find('tr');
+                    }
+
                     elementList.push(itemElement);
 
-                    // If the child container is a sibling of the item, we handle that by appending a compiled
-                    // version of a clone of the child container template to the item node; if the node is a child
-                    // of the item, we replace the placeholder node with the compiled container node.
-                    childContainerTemplate = $compile(angular.element(itemScope.childTemplate).clone());
-                    containerElement = childContainerTemplate(itemScope);
-
-                    itemScope.containerElement = containerElement;
                     itemScope.itemElement = itemElement;
-                    itemScope.lastChildElement = itemElement;
-                    itemScope.childStrategy = siblingImplementation;
+                    //itemScope.lastChildElement = itemElement;
 
                     // Whenever the node is expanded or collapsed, we need to re-render the child list
                     itemScope.$watch(

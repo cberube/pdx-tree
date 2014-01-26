@@ -8,66 +8,99 @@
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
 
     <style>
-        .pdx-tree {
+        .tree {
             padding-left: 0;
         }
 
-        .pdx-tree li {
+        .tree li {
             list-style-type: none;
         }
 
-        .pdx-tree ul {
+        .tree ul {
             padding-left: 1.5em;
+        }
+
+        table.tree td {
+            cursor: pointer;
+        }
+
+        .tree .glyphicon {
+            margin-left: 0.5em;
+            margin-right: 0.2em;
         }
     </style>
 </head>
 
 <body ng-app="PdxTreeTestApp">
     <div class="container">
-        <form>
-            <div ng-controller="PdxTreeTestCtrl">
+        <div class="row" ng-controller="PdxTreeTestCtrl">
+            <div class="col-xs-12">
                 <h1>PDX Tree</h1>
-
-                <h2>Nested list example</h2>
-                <ul pdx-tree pdx-tree-options="treeOptions" class="pdx-tree" pdx-tree-node-list="nodes">
-                    <li pdx-tree-item>
-                        <span ng-class="pdxTreeOptions.getNodeIcon(node)" class="glyphicon"></span>
-                        <a ng-click="toggleChildren(node)">{{ node.name }}</a>
-                        <ul pdx-tree-children></ul>
-                    </li>
-                </ul>
-
-                <h2>Flat example</h2>
-                <div pdx-tree pdx-tree-options="treeOptions" class="pdx-tree list-group" pdx-tree-node-list="nodes">
-                    <a pdx-tree-item pdx-tree-children class="list-group-item" ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)" ng-click="toggleChildren(node)">
-                        <span ng-class="pdxTreeOptions.getAlternateNodeIcon(node)" class="glyphicon"></span>
-                        {{ node.name }}
-                        <div class="pull-right">
-                            <div class="label label-default">{{pdxTreeNodeDepth}}</div>
-                            <div class="label label-info" ng-bind="pdxTreeOptions.getChildCount(node)"></div>
-                        </div>
-                    </a>
-                </div>
-
-                <h2>Table example</h2>
-                <table pdx-tree pdx-tree-options="treeOptions" class="table table-striped" pdx-tree-node-list="nodes">
-                    <thead>
-                        <tr>
-                            <th>Node</th>
-                            <th>Depth</th>
-                            <th>Children</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr pdx-tree-item pdx-tree-children>
-                            <td ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)"><a ng-click="toggleChildren(node)">{{ node.name }}</a></td>
-                            <td>{{pdxTreeNodeDepth}}</td>
-                            <td>{{pdxTreeOptions.getChildCount(node)}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <button class="btn btn-default" ng-click="addNode()">Add node</button>
             </div>
-        </form>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Nested list example</h2>
+                    </div>
+                    <div class="panel-body">
+                        <ul pdx-tree pdx-tree-options="treeOptions" class="tree" pdx-tree-node-list="nodeContainer">
+                            <li pdx-tree-item>
+                                <span ng-class="pdxTreeOptions.getNodeIcon(node)" class="glyphicon"></span>
+                                <a ng-click="toggleChildren(node)">{{ node.name }}</a>
+                                <ul pdx-tree-children></ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Flat example</h2>
+                    </div>
+                    <div pdx-tree pdx-tree-options="treeOptions" class="pdx-tree list-group tree" pdx-tree-node-list="nodeContainer">
+                        <a pdx-tree-item pdx-tree-children class="list-group-item" ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)" ng-click="toggleChildren(node)">
+                            <span ng-class="pdxTreeOptions.getAlternateNodeIcon(node)" class="glyphicon"></span>
+                            {{ node.name }}
+                            <div class="pull-right">
+                                <div class="label label-default">{{pdxTreeNodeDepth}}</div>
+                                <div class="label label-info" ng-bind="pdxTreeOptions.getChildCount(node)"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Table example</h2>
+                    </div>
+                    <table pdx-tree pdx-tree-options="treeOptions" class="table table-striped table-hover tree" pdx-tree-node-list="nodeContainer">
+                        <thead>
+                            <tr>
+                                <th>Node</th>
+                                <th>Depth</th>
+                                <th>Children</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr pdx-tree-children pdx-tree-item ng-click="toggleChildren(node)">
+                                <td ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth)">
+                                    <span ng-class="pdxTreeOptions.getNodeIcon(node)" class="glyphicon"></span>
+                                    {{ node.name }}
+                                </td>
+                                <td>{{pdxTreeNodeDepth}}</td>
+                                <td>{{pdxTreeOptions.getChildCount(node)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="application/javascript" src="../bower_components/angular/angular.js"></script>

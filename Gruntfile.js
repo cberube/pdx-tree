@@ -14,9 +14,13 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'src/pdx-tree.js',
+                    'src/services/child-strategy/PdxTreeNestedImplementation.js',
+                    'src/services/child-strategy/PdxTreeSiblingImplementation.js',
                     'src/services/PdxTreeChildManagerService.js',
                     'src/services/PdxTreeDomService.js',
                     'src/directives/PdxTree.js',
+                    'src/directives/PdxTreeItem.js',
+                    'src/directives/PdxTreeChildren.js',
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }

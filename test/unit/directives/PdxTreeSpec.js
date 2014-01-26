@@ -1,7 +1,3 @@
-/**
- * Created by nackjicholson on 11/29/13.
- */
-
 describe('PdxTree Directive', function() {
    "use strict";
 
@@ -13,15 +9,13 @@ describe('PdxTree Directive', function() {
 
         inject(function($compile, $rootScope) {
             scope = $rootScope;
-            scope.treeConfiguration = {foo: 'bar'};
+            scope.treeConfiguration = {};
             scope.nodes = [{id: 'bagel', name: 'creamcheese'}];
-            element = angular.element('<div pdx-tree pdx-tree-config="treeConfiguration" class="pdx-tree" item-list="nodes"></div>');
-            $compile(element)(scope);
+            element = angular.element(
+                '<div pdx-tree pdx-tree-config="treeConfiguration" pdx-tree-node-list="nodes"><div pdx-tree-item></div></div>'
+            );
+
+            var result = $compile(element)(scope);
         });
-    });
-
-
-    it('has class pdx-tree', function() {
-        expect(element.hasClass('pdx-tree')).toBe(true);
     });
 });

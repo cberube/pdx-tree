@@ -1,0 +1,19 @@
+[
+    { "id": "Foo", "name": "Foo" },
+    { "id": "Bar", "name": "Bar", "childList": false },
+    {
+        "id": "Baz",
+        "name": "Baz",
+        "childList": [
+            { "id": "Baz1", "name": "Baz child 1", "childList": false },
+            {
+                "id": "Baz2",
+                "name": "Baz child 2",
+                "childList": [
+                    { "id": "Qux1", "name": "Qux 1", "childList": false }
+                ]
+            }
+        ]
+    },
+    { "id": "Flob", "name": "Flob" }
+]

@@ -28,14 +28,14 @@ angular.module('pdxTree').service(
                  * Create one or more elements to represent the given tree item
                  */
                 createItem: function(scope, node) {
-                    var itemTemplate = $compile(scope.itemTemplate.clone());
+                    var itemTemplate = $compile(scope.itemTemplate);
                     var itemScope = scope.$new();
                     var itemElement;
                     var containerElement;
                     var childContainerTemplate;
                     var childContainerElement;
 
-                    itemElement = itemTemplate(itemScope);
+                    itemElement = itemTemplate(itemScope, function() {});
 
                     childContainerElement = pdxTreeDomService.findChildWithAttribute(itemElement, 'pdx-tree-children', true);
                     childContainerTemplate = $compile(scope.childTemplate.clone());
@@ -44,7 +44,7 @@ angular.module('pdxTree').service(
                     angular.element(childContainerElement).replaceWith(containerElement);
 
                     itemScope.node = node;
-                    itemScope.itemTemplate = scope.itemTemplate.clone();
+                    itemScope.itemTemplate = scope.itemTemplate;
                     itemScope.pdxTreeNodeDepth = scope.pdxTreeNodeDepth + 1;
                     itemScope.childStrategy = nestedImplementation;
                     itemScope.containerElement = containerElement;
