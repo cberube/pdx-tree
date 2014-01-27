@@ -50,9 +50,9 @@ angular.module('pdxTree').service(
 
                     itemScope.node = node;
                     itemScope.itemTemplate = scope.itemTemplate;
-                    itemScope.pdxTreeNodeDepth = scope.pdxTreeNodeDepth + 1;
                     itemScope.childElementList = [];
                     itemScope.childStrategy = siblingImplementation;
+                    itemScope._pdxTreeNodeDepth = scope._pdxTreeNodeDepth + 1;
 
                     itemElement = itemTemplate(
                         itemScope,

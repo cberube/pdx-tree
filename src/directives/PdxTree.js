@@ -7,7 +7,7 @@ angular.module('pdxTree').directive(
                 this.node.expanded = !this.node.expanded;
 
                 if (this.node.expanded && this.node.childList == null) {
-                    this.loadChildren(this.node);
+                    this.loadChildren(this, this.node);
                 }
             };
 
@@ -27,11 +27,11 @@ angular.module('pdxTree').directive(
                     });
                 }
 
-                if (!scope.pdxTreeNodeList) {
+                if (!scope.pdxTreeController) {
                     return;
                 }
 
-                angular.forEach(scope.pdxTreeNodeList.nodeList, function(node) {
+                angular.forEach(scope.pdxTreeNodeList, function(node) {
                     pdxTreeDomService.appendAllElements(targetElement, scope.childStrategy.createItem(scope, node));
                 });
             };
@@ -40,7 +40,7 @@ angular.module('pdxTree').directive(
                 restrict: "EA",
                 scope: {
                     "pdxTreeNodeList": "=",
-                    "pdxTreeOptions": "="
+                    "pdxTreeController": "="
                 },
                 controller: function($scope)
                 {
@@ -70,14 +70,21 @@ angular.module('pdxTree').directive(
                 link: function(scope) {
                     var targetElement = scope.itemContainer.parent();
 
-                    scope.toggleChildren = toggleChildren;
-                    scope.loadChildren = scope.pdxTreeOptions.loadChildren || function() { return false; };
-                    scope.pdxTreeNodeDepth = 0;
+                    scope._pdxTreeController = {
+                        toggleChildren: toggleChildren,
+                        loadChildren: function() { return false; }
+                    };
+                    scope._pdxTreeNodeDepth = 0;
+
+                    scope.pdxTreeController(scope);
+
+                    scope.toggleChildren = scope.toggleChildren || scope._pdxTreeController.toggleChildren;
+                    scope.loadChildren = scope.loadChildren || scope._pdxTreeController.loadChildren;
 
                     targetElement.html('');
 
                     scope.$watchCollection(
-                        'pdxTreeNodeList.nodeList',
+                        'pdxTreeNodeList',
                         function() {
                             buildTree(scope, targetElement);
                         }

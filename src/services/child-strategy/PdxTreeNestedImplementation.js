@@ -45,10 +45,10 @@ angular.module('pdxTree').service(
 
                     itemScope.node = node;
                     itemScope.itemTemplate = scope.itemTemplate;
-                    itemScope.pdxTreeNodeDepth = scope.pdxTreeNodeDepth + 1;
                     itemScope.childStrategy = nestedImplementation;
                     itemScope.containerElement = containerElement;
                     itemScope.itemElement = itemElement;
+                    itemScope._pdxTreeNodeDepth = scope._pdxTreeNodeDepth + 1;
 
                     // Whenever the node is expanded or collapsed, we need to re-render the child list
                     itemScope.$watch(

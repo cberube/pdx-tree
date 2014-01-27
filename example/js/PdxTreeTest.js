@@ -23,7 +23,7 @@ angular
                     return node.name;
                 };
 
-                var loadChildren = function(node) {
+                var loadChildren = function(scope, node) {
                     if (node.id === 'Foo' && !angular.isArray(node.childList)) {
                         node.childList = [
                             { id: "Foo1", name: "Foo-child-1" },
@@ -82,46 +82,23 @@ angular
                     return node.childList === false ? '0' : '+';
                 };
 
-                $scope.treeOptions = {
-                    "loadChildren": loadChildren,
-                    "getNodeState": getNodeState,
-                    "getNodeIcon": angular.bind(this, getNodeIcon, stateIconMap),
-                    "getAlternateNodeIcon": angular.bind(this, getNodeIcon, alternateStateIconMap),
-                    "getNodePadding": getNodePadding,
-                    "getChildCount": getChildCount,
-                    "describeNode": describeNode
-                };
-
-                /*
-                $scope.nodeContainer = { nodeList: [
-                    { id: "Foo", name: "Foo" },
-                    { id: "Bar", name: "Bar", childList: false },
-                    {
-                        id: "Baz",
-                        name: "Baz",
-                        childList: [
-                            { id: "Baz1", name: "Baz child 1", childList: false },
-                            {
-                                id: "Baz2",
-                                name: "Baz child 2",
-                                childList: [
-                                    { id: "Qux1", name: "Qux 1", childList: false }
-                                ]
-                            }
-                        ]
+                $scope.tree = {
+                    controller: function(scope) {
+                        scope.getNodeState = getNodeState;
+                        scope.getNodeIcon = angular.bind(this, getNodeIcon, stateIconMap);
+                        scope.getAlternateNodeIcon = angular.bind(this, getNodeIcon, alternateStateIconMap);
+                        scope.getNodePadding = getNodePadding;
+                        scope.getChildCount = getChildCount;
+                        scope.describeNode = describeNode;
+                        scope.loadChildren = loadChildren;
                     },
-                    { id: "Flob", name: "Flob" }
-                ] };
-                */
-
-                $scope.nodeContainer = {};
-
-                $scope.nodeContainer.nodeList = Children.query({ nodeId: 'Nodes'});
+                    nodeList: Children.query({ nodeId: 'Nodes'})
+                };
 
                 $scope.addNode = function() {
                     var now = new Date();
 
-                    $scope.nodeContainer.nodeList.push({ name: now.toISOString() });
+                    $scope.tree.nodeList.push({ name: now.toISOString() });
                 };
             }
         ]
