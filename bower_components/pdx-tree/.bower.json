@@ -1,0 +1,55 @@
+{
+  "name": "pdx-tree",
+  "keywords": [
+    "angular",
+    "tree",
+    "tree-table",
+    "tree table",
+    "hierarchy"
+  ],
+  "version": "0.0.5",
+  "authors": [
+    "Charles Berube <cberube@gmail.com>"
+  ],
+  "description": "Tree control for AngularJS",
+  "main": "dist/pdx-tree.min.js",
+  "license": "MIT",
+  "ignore": [
+    "bower_components",
+    "config",
+    "example",
+    "node_modules",
+    "scripts",
+    "src",
+    "test",
+    ".gitignore",
+    ".jshintrc",
+    ".travis.yml",
+    "bower.json",
+    "Gruntfile.js",
+    "npm-debug.log",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "angular": "~1.2.3",
+    "angular-resource": "~1.2.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.3",
+    "angular-scenario": "~1.2.3",
+    "bootstrap": "~3.0.2",
+    "angular-loader": "~1.2.3"
+  },
+  "homepage": "https://github.com/cberube/pdx-tree",
+  "_release": "0.0.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.5",
+    "commit": "2ed186f140dce61bf00110131d87944360e378e0"
+  },
+  "_source": "git://github.com/cberube/pdx-tree.git",
+  "_target": "~0.0.5",
+  "_originalSource": "pdx-tree",
+  "_direct": true
+}
