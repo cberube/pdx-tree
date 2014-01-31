@@ -1,6 +1,7 @@
 {
-    "name": "PdxTree",
-    "version": "0.0.4",
+    "name": "pdx-tree",
+    "keywords": [ "angular", "tree", "tree-table", "tree table", "hierarchy" ],
+    "version": "0.0.5",
     "authors": [
         "Charles Berube <cberube@gmail.com>"
     ],
