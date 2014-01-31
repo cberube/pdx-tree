@@ -70,7 +70,6 @@ angular.module('pdxTree').service(
                     elementList.push(itemElement);
 
                     itemScope.itemElement = itemElement;
-                    //itemScope.lastChildElement = itemElement;
 
                     // Whenever the node is expanded or collapsed, we need to re-render the child list
                     itemScope.$watch(

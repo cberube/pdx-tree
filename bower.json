@@ -1,28 +1,37 @@
 {
-  "name": "PdxTree",
-  "version": "0.0.2",
-  "authors": [
-    "Charles Berube <cberube@gmail.com>"
-  ],
-  "description": "Tree control for AngularJS",
-  "main": "pdx-tree.js",
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "example",
-    "test",
-    "bower_components",
-    "scripts"
-  ],
-  "dependencies": {
-    "angular": "~1.2.3",
-    "angular-resource": "~1.2.2"
-  },
-  "devDependencies": {
-    "angular-mocks": "~1.2.3",
-    "angular-scenario": "~1.2.3",
-    "bootstrap": "~3.0.2",
-    "angular-loader": "~1.2.3"
-  }
+    "name": "PdxTree",
+    "version": "0.0.4",
+    "authors": [
+        "Charles Berube <cberube@gmail.com>"
+    ],
+    "description": "Tree control for AngularJS",
+    "main": "dist/pdx-tree.min.js",
+    "license": "MIT",
+    "ignore": [
+        "bower_components",
+        "config",
+        "example",
+        "node_modules",
+        "scripts",
+        "src",
+        "test",
+        ".gitignore",
+        ".jshintrc",
+        ".travis.yml",
+        "bower.json",
+        "Gruntfile.js",
+        "npm-debug.log",
+        "package.json",
+        "README.md"
+    ],
+    "dependencies": {
+        "angular": "~1.2.3",
+        "angular-resource": "~1.2.2"
+    },
+    "devDependencies": {
+        "angular-mocks": "~1.2.3",
+        "angular-scenario": "~1.2.3",
+        "bootstrap": "~3.0.2",
+        "angular-loader": "~1.2.3"
+    }
 }
