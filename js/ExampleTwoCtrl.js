@@ -20,20 +20,20 @@ angular.module('PdxTreePages').controller(
 
             $scope.tree = {};
 
-            $scope.tree.getNodePadding = function(depth) {
-                return {
-                    "padding-left": ((depth - 1) * 20) + "px"
+            $scope.tree.controller = function(scope) {
+                scope.getNodePadding = function(depth) {
+                    return {
+                        "padding-left": ((depth - 1) * 20) + "px"
+                    };
                 };
-            };
 
-            $scope.tree.nodeSelectionChanged = function(node) {
-                if (node.selected) {
-                    $scope.selectedItems[node.name] = true;
-                } else {
-                    delete $scope.selectedItems[node.name];
-                }
-
-                console.log($scope);
+                scope.nodeSelectionChanged = function(node) {
+                    if (node.selected) {
+                        $scope.selectedItems[node.name] = true;
+                    } else {
+                        delete $scope.selectedItems[node.name];
+                    }
+                };
             };
 
             $scope.tree.nodeList = [

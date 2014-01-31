@@ -52,19 +52,20 @@
 
             <div class="collapse navbar-collapse" id="navbar-collapse-container">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Features</a></li>
+                    <li><a href="#features">Features</a></li>
                     <li><a href="#examples">Examples</a></li>
                     <li><a href="#">Installation</a></li>
                     <li><a href="#">Quick Start</a></li>
                     <li><a href="#">Usage Details</a></li>
-                    <li><a href="#">GitHub Repository</a></li>
+                    <li><a href="#github">GitHub Repository</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <h2><a name="features">Features</a></h2>
+                <a name="features"></a>
+                <h2>Features</h2>
             </div>
         </div>
 
@@ -94,7 +95,14 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h2><a name="examples">Examples</a></h2>
+                <a name="examples"></a>
+                <h2>Examples</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Nested and flat trees</h3>
             </div>
         </div>
 
@@ -105,7 +113,7 @@
                         <h3 class="panel-title">Nested tree</h3>
                     </div>
                     <div class="panel-body">
-                        <ul pdx-tree pdx-tree-options="tree">
+                        <ul pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
                             <li pdx-tree-item>
                                 <a href="#" ng-click="toggleChildren(node)">{{ node.name }}</a>
                                 <ul pdx-tree-children></ul>
@@ -120,9 +128,9 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Flat tree</h3>
                     </div>
-                    <ul pdx-tree pdx-tree-options="tree" class="list-group">
+                    <ul pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList" class="list-group">
                         <li pdx-tree-children pdx-tree-item class="list-group-item">
-                            <a ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth);" href="#" ng-click="toggleChildren(node)">{{ node.name }}</a>
+                            <a ng-style="getNodePadding(_pdxTreeNodeDepth);" href="#" ng-click="toggleChildren(node)">{{ node.name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -131,11 +139,17 @@
 
         <div class="row">
             <div class="col-md-12">
+                <h3>Tree table</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel panel-default" ng-controller="ExampleOneCtrl">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tree-table</h3>
+                        <h3 class="panel-title">Tree table</h3>
                     </div>
-                    <table pdx-tree pdx-tree-options="tree" class="table table-condensed table-hover">
+                    <table pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList" class="table table-condensed table-hover">
                         <thead>
                             <tr>
                                 <th width="50%">Name</th>
@@ -145,7 +159,7 @@
                         </thead>
                         <tbody>
                             <tr pdx-tree-children pdx-tree-item ng-click="toggleChildren(node)">
-                                <td><span ng-style="pdxTreeOptions.getNodePadding(pdxTreeNodeDepth);">{{ node.name }}</span></td>
+                                <td><span ng-style="getNodePadding(_pdxTreeNodeDepth);">{{ node.name }}</span></td>
                                 <td ng-bind-html="node.charge"></td>
                                 <td>{{ node.mass }}</td>
                             </tr>
@@ -155,15 +169,21 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Node selection</h3>
+            </div>
+        </div>
+
         <div class="row" ng-controller="ExampleTwoCtrl">
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Available options</h3>
                     </div>
-                    <ul class="list-group" pdx-tree pdx-tree-options="tree">
+                    <ul class="list-group" pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
                         <li class="list-group-item" pdx-tree-item pdx-tree-children>
-                            <input type="checkbox" ng-show="node.childList==false" ng-change="pdxTreeOptions.nodeSelectionChanged(node)" ng-model="node.selected">
+                            <input type="checkbox" ng-show="node.childList==false" ng-change="nodeSelectionChanged(node)" ng-model="node.selected">
                             <a ng-click="toggleChildren(node)">{{ node.name }}</a>
                             <div ng-if="node.childList!=false">Spoon</div>
                         </li>
@@ -185,6 +205,14 @@
                 </div>
             </div>
         -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <a name="github"></a>
+                <h2>GitHub repository</h2>
+                <p><a href="https://github.com/cberube/PdxTree">https://github.com/cberube/PdxTree</a></p>
+            </div>
+        </div>
     </div>
 
     <script src="assets/jquery/jquery.min.js"></script>
@@ -193,7 +221,8 @@
     <script src="assets/angular/angular-sanitize.min.js"></script>
     <script src="assets/rainbow/js/rainbow-custom.min.js"></script>
 
-    <script type="application/javascript" src="assets/pdx-tree/pdx-tree.js"></script>
+    <script type="application/javascript" src="assets/pdx-tree/pdx-tree.min.js"></script>
+    <!--
     <script type="application/javascript" src="assets/pdx-tree/directives/PdxTree.js"></script>
     <script type="application/javascript" src="assets/pdx-tree/directives/PdxTreeItem.js"></script>
     <script type="application/javascript" src="assets/pdx-tree/directives/PdxTreeChildren.js"></script>
@@ -201,6 +230,7 @@
     <script type="application/javascript" src="assets/pdx-tree/services/PdxTreeChildManagerService.js"></script>
     <script type="application/javascript" src="assets/pdx-tree/services/child-strategy/PdxTreeNestedImplementation.js"></script>
     <script type="application/javascript" src="assets/pdx-tree/services/child-strategy/PdxTreeSiblingImplementation.js"></script>
+    -->
 
     <script src="js/PdxTreePages.js"></script>
     <script src="js/ExampleOneCtrl.js"></script>

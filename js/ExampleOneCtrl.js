@@ -17,9 +17,11 @@ angular.module('PdxTreePages').controller(
 
             $scope.tree = {};
 
-            $scope.tree.getNodePadding = function(depth) {
-                return {
-                    "padding-left": ((depth - 1) * 20) + "px"
+            $scope.tree.controller = function(scope) {
+                scope.getNodePadding = function(depth) {
+                    return {
+                        "padding-left": ((depth - 1) * 20) + "px"
+                    };
                 };
             };
 
