@@ -1,0 +1,13 @@
+<div ng-app="yourApp">
+    <div ng-controller="yourController">
+        <ul pdx-tree
+            pdx-tree-controller="tree.controller"
+            pdx-tree-node-list="tree.nodeList"
+        >
+            <li pdx-tree-item>
+                <a href="" ng-click="toggleChildren(node)">{{ node.name }}</a>
+                <ul pdx-tree-children></ul>
+            </li>
+        </ul>
+    </div>
+</div>

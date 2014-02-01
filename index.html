@@ -15,6 +15,15 @@
             margin-bottom: 0;
         }
 
+        ol li {
+            margin-bottom: 0.25em;
+        }
+
+        ol li pre {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
         p code {
             color: inherit;
             background-color: rgb(62, 68, 76);
@@ -32,6 +41,54 @@
             padding-bottom: 0;
             height: 20em;
             overflow-y: auto;
+        }
+
+        .view-container {
+            position: relative;
+            background-color: #3F0000;
+        }
+
+        .view-animate {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+        }
+
+        .view-animate.ng-enter, .view-animate.ng-leave {
+            -webkit-transition: all 1.0s;
+            transition: all 1.0s;
+            /*
+            -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+            transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+            */
+        }
+
+        .view-animate.ng-enter {
+            opacity: 0;
+        }
+        .view-animate.ng-enter.ng-enter-active {
+            opacity: 1;
+        }
+        .view-animate.ng-leave.ng-leave-active {
+            opacity: 0;
+        }
+
+        .navbar {
+            margin: auto;
+        }
+
+        pre .tag.close {
+            float: none;
+            font-size: inherit;
+            font-weight: inherit;
+            text-shadow: none;
+            opacity: 1.0;
+            filter: none;
+        }
+
+        pre .tag.close:hover {
+            cursor: default;
         }
     </style>
 </head>
@@ -53,146 +110,24 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#features">Features</a></li>
                     <li><a href="#examples">Examples</a></li>
-                    <li><a href="#">Installation</a></li>
-                    <li><a href="#">Quick Start</a></li>
-                    <li><a href="#">Usage Details</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#quickStart">Quick Start</a></li>
+                    <li><a href="#usage">Usage Details</a></li>
                     <li><a href="#github">GitHub Repository</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a name="features"></a>
-                <h2>Features</h2>
-            </div>
+        <div class="view-container">
+            <div ng-view class="view-animate"></div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <p class="lead">
-                    PdxTree is an AngularJS directive that aims to help manage the rendering of hierarchical data.
-                </p>
-                <p>
-                    It consists of a primary <code>pdx-tree</code> directive, two light-weight marker directives
-                    (<code>pdx-tree-item</code> and <code>pdx-tree-children</code>), and several supporting services.
-                </p>
-                <p>
-                    Data for PdxTree may be pre-loaded in the Angular scope or loaded over HTTP as needed.
-                </p>
-                <p>
-                    PdxTree supports both a "nested" rendering style and a "sibling" rendering style. The nested
-                    style works well with standard HTML lists, while the sibling style works well with stylized
-                    listings and makes tree and table combinations possible.
-                </p>
-                <p>
-                    PdxTree works to generate the HTML for the tree, but defers much of the control over the tree
-                    to the client code.
-                </p>
-            </div>
-        </div>
+        <!--
+        <ng-include src="'templates/features.html'"></ng-include>
+        <ng-include src="'templates/examples.html'"></ng-include>
+        <ng-include src="'templates/github.html'"></ng-include>
+        -->
 
-        <div class="row">
-            <div class="col-md-12">
-                <a name="examples"></a>
-                <h2>Examples</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Nested and flat trees</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-default" ng-controller="ExampleOneCtrl">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Nested tree</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
-                            <li pdx-tree-item>
-                                <a href="#" ng-click="toggleChildren(node)">{{ node.name }}</a>
-                                <ul pdx-tree-children></ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-default" ng-controller="ExampleOneCtrl">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Flat tree</h3>
-                    </div>
-                    <ul pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList" class="list-group">
-                        <li pdx-tree-children pdx-tree-item class="list-group-item">
-                            <a ng-style="getNodePadding(_pdxTreeNodeDepth);" href="#" ng-click="toggleChildren(node)">{{ node.name }}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Tree table</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default" ng-controller="ExampleOneCtrl">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Tree table</h3>
-                    </div>
-                    <table pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList" class="table table-condensed table-hover">
-                        <thead>
-                            <tr>
-                                <th width="50%">Name</th>
-                                <th width="25%">Charge (e)</th>
-                                <th width="25%">Mass (MeV/c&sup2;)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr pdx-tree-children pdx-tree-item ng-click="toggleChildren(node)">
-                                <td><span ng-style="getNodePadding(_pdxTreeNodeDepth);">{{ node.name }}</span></td>
-                                <td ng-bind-html="node.charge"></td>
-                                <td>{{ node.mass }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Node selection</h3>
-            </div>
-        </div>
-
-        <div class="row" ng-controller="ExampleTwoCtrl">
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Available options</h3>
-                    </div>
-                    <ul class="list-group" pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
-                        <li class="list-group-item" pdx-tree-item pdx-tree-children>
-                            <input type="checkbox" ng-show="node.childList==false" ng-change="nodeSelectionChanged(node)" ng-model="node.selected">
-                            <a ng-click="toggleChildren(node)">{{ node.name }}</a>
-                            <div ng-if="node.childList!=false">Spoon</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <pre>{{ selectedItems | json }}</pre>
-            </div>
-        </div>
         <!--
             <div class="col-md-6">
                 <div class="panel panel-default">
@@ -205,19 +140,14 @@
             </div>
         -->
 
-        <div class="row">
-            <div class="col-md-12">
-                <a name="github"></a>
-                <h2>GitHub repository</h2>
-                <p><a href="https://github.com/cberube/pdx-tree">https://github.com/cberube/pdx-tree</a></p>
-            </div>
-        </div>
     </div>
 
     <script type="application/javascript" src="assets/jquery/jquery.min.js"></script>
     <script type="application/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script type="application/javascript" src="bower_components/angular/angular.min.js"></script>
     <script type="application/javascript" src="assets/angular/angular-sanitize.min.js"></script>
+    <script type="application/javascript" src="assets/angular/angular-route.min.js"></script>
+    <script type="application/javascript" src="assets/angular/angular-animate.min.js"></script>
     <script type="application/javascript" src="assets/rainbow/js/rainbow-custom.min.js"></script>
 
     <script type="application/javascript" src="bower_components/pdx-tree/dist/pdx-tree.min.js"></script>

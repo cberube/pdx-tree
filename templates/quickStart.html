@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Quick start</h2>
+
+        <p>
+            PdxTree requires AngularJS.
+        </p>
+
+        <ol>
+            <li><a href="#installation">Download PdxTree using Bower or by downloading the pdx-tree.min.js file</a></li>
+            <li>Add the <code>pdx-tree.min.js</code> script to your page</li>
+            <li>Add a dependency on the <code>pdx-tree</code> module to your Angular module</li>
+            <li>Create an Angular controller that will manage your tree</li>
+            <li>
+                Within your controller, create a data structure for the tree options and tree data:
+                <pre include-source="templates/source/quickStart/controller.js"></pre>
+            </li>
+            <li>
+                Within your page, apply the <code>pdx-tree</code> directive to an HTML structure for your tree:
+                <pre include-source="templates/source/quickStart/page.html"></pre>
+                <p>
+                    Note that you must specify the <code>pdx-tree-node-list</code> attribute, and the markup for your
+                    tree must contain both the <code>pdx-tree-item</code> and <code>pdx-tree-children</code> directives.
+                </p>
+            </li>
+        </ol>
+    </div>
+</div>
