@@ -7,7 +7,7 @@
     "tree table",
     "hierarchy"
   ],
-  "version": "0.0.5",
+  "version": "0.0.6",
   "authors": [
     "Charles Berube <cberube@gmail.com>"
   ],
@@ -42,14 +42,13 @@
     "angular-loader": "~1.2.3"
   },
   "homepage": "https://github.com/cberube/pdx-tree",
-  "_release": "0.0.5",
+  "_release": "0.0.6",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.5",
-    "commit": "2ed186f140dce61bf00110131d87944360e378e0"
+    "tag": "v0.0.6",
+    "commit": "ffa2e5a7cc54100c0909b0e123247d933045c6fe"
   },
   "_source": "git://github.com/cberube/pdx-tree.git",
   "_target": "~0.0.5",
-  "_originalSource": "pdx-tree",
-  "_direct": true
+  "_originalSource": "pdx-tree"
 }
