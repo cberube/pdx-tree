@@ -43,7 +43,7 @@ angular.module('pdxTree').service(
                 },
 
                 createItem: function(scope, node) {
-                    var itemTemplate = $compile(scope.itemTemplate);
+                    var itemTemplate = $compile(scope.itemTemplate.clone());
                     var itemScope = scope.$new();
                     var itemElement;
                     var elementList = [];

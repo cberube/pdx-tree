@@ -1,8 +1,20 @@
 angular.module('pdxTree').directive(
     'pdxTree',
     [
-        '$rootScope', '$compile', 'pdxTreeChildManagerService', 'pdxTreeDomService',
-        function($rootScope, $compile, childManagerService, pdxTreeDomService) {
+        '$rootScope',
+        '$compile',
+        'pdxTreeChildManagerService',
+        'pdxTreeDomService',
+        'pdxTreeNestedImplementation',
+        'pdxTreeSiblingImplementation',
+        function(
+            $rootScope,
+            $compile,
+            childManagerService,
+            pdxTreeDomService,
+            pdxTreeNestedImplementation,
+            pdxTreeSiblingImplementation
+        ) {
             var toggleChildren = function() {
                 this.node.expanded = !this.node.expanded;
 
@@ -38,6 +50,7 @@ angular.module('pdxTree').directive(
 
             return {
                 restrict: "EA",
+                priority: 2000,
                 scope: {
                     "pdxTreeNodeList": "=",
                     "pdxTreeController": "="
@@ -67,7 +80,24 @@ angular.module('pdxTree').directive(
                         $scope.itemContainer = itemContainer;
                     };
                 },
-                link: function(scope) {
+                link: function(scope, element, attributes) {
+                    var itemElement;
+                    var childrenElement;
+
+                    if (attributes.ngNonBindable != null) {
+                        // If the tree needed to be non-bindable, we cannot depend on the marker directives to
+                        // supply the item and child container nodes, so we must look them up directly
+
+                        itemElement = pdxTreeDomService.findChildWithAttribute(element, 'pdx-tree-item', true);
+                        childrenElement = pdxTreeDomService.findChildWithAttribute(element, 'pdx-tree-children', true);
+
+                        scope.itemTemplate = angular.element(itemElement).clone();
+                        scope.itemContainer = angular.element(itemElement);
+                        scope.childTemplate = angular.element(childrenElement).clone();
+
+                        scope.childStrategy = (itemElement === childrenElement ? pdxTreeSiblingImplementation : pdxTreeNestedImplementation);
+                    }
+
                     var targetElement = scope.itemContainer.parent();
 
                     scope._pdxTreeController = {

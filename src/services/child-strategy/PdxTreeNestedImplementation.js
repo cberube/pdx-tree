@@ -28,7 +28,7 @@ angular.module('pdxTree').service(
                  * Create one or more elements to represent the given tree item
                  */
                 createItem: function(scope, node) {
-                    var itemTemplate = $compile(scope.itemTemplate);
+                    var itemTemplate = $compile(scope.itemTemplate.clone());
                     var itemScope = scope.$new();
                     var itemElement;
                     var containerElement;
