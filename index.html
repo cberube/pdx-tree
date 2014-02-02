@@ -90,6 +90,16 @@
         pre .tag.close:hover {
             cursor: default;
         }
+
+        .tree a {
+            cursor: pointer;
+        }
+
+        .tree label {
+            cursor: pointer;
+            font-weight: normal;
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -121,25 +131,6 @@
         <div class="view-container">
             <div ng-view class="view-animate"></div>
         </div>
-
-        <!--
-        <ng-include src="'templates/features.html'"></ng-include>
-        <ng-include src="'templates/examples.html'"></ng-include>
-        <ng-include src="'templates/github.html'"></ng-include>
-        -->
-
-        <!--
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">JavaScript</h4>
-                    </div>
-                    <pre class="panel-body" include-source="js/ExampleOneCtrl.js">
-                    </pre>
-                </div>
-            </div>
-        -->
-
     </div>
 
     <script type="application/javascript" src="assets/jquery/jquery.min.js"></script>

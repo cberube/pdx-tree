@@ -85,11 +85,18 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Available options</h3>
             </div>
-            <ul class="list-group" pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
+            <ul class="list-group tree" ng-non-bindable pdx-tree pdx-tree-controller="tree.controller" pdx-tree-node-list="tree.nodeList">
                 <li class="list-group-item" pdx-tree-item pdx-tree-children>
-                    <input type="checkbox" ng-show="node.childList==false" ng-change="nodeSelectionChanged(node)" ng-model="node.selected">
-                    <a ng-click="toggleChildren(node)">{{ node.name }}</a>
-                    <div ng-if="node.childList!=false">Spoon</div>
+                    <span ng-if="node.childList!=false">
+                        <input type="checkbox" ng-if="node.childList==false" ng-change="nodeSelectionChanged(node)" ng-model="node.selected">
+                        <a style="display: block;" ng-click="toggleChildren(node)">{{ node.name }}</a>
+                    </span>
+                    <span ng-if="node.childList==false">
+                        <label style="display: block;">
+                            <input type="checkbox" ng-if="node.childList==false" ng-change="nodeSelectionChanged(node)" ng-model="node.selected">
+                            {{ node.name }}
+                        </label>
+                    </span>
                 </li>
             </ul>
         </div>
