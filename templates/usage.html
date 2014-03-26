@@ -1,17 +1,171 @@
 <div class="row">
     <div class="col-md-12">
         <h2>Usage Details</h2>
-        <p><em>Detailed usage information is coming soon.</em></p>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <h3>Node structure</h3>
+        <p>
+            Nodes rendered by PdxTree are represented by objects contained in an array. The tree expects that an
+            array will be bound to the <code>pdx-tree-node-list</code> attribute on the same element as the
+            <code>pdx-tree</code> directive.
+        </p>
+        <p>
+            Each node in the tree may contain any set of properties, and there is no requirement that the nodes
+            all share the same structure.
+        </p>
+        <p>
+            PdxTree does treat two properties specially on each node.
+        </p>
+        <p>
+            The first special property is <code>childList</code>, which must be either <code>null</code>,
+            <code>false</code>, a promise, or an array of node objects.
+        </p>
+        <p>
+            The second special property is <code>expanded</code>, which should be either truthy or falsey.
+        </p>
+    </div>
+</div>
 
-<!--
-<small>
-    You do not need to create both your tree controller function and tree node list inside the same
-    object -- in fact, they do not need to be within an object at all -- but it is <em>very strongly
-    recommended</em> that you place your node list within an object. You should consider the node
-    list to be a property of a model that represents the tree, and you should not consider the
-    Angular scope to be that model.
-</small>
--->
+<div class="row">
+    <div class="col-md-12">
+        <h3>The <code>childList</code> property</h3>
+        <p>
+            If this property is an array, PdxTree will treat it as the list of child nodes for the current node.
+            This is the standard mechanism for defining a set of child nodes that are known at the time the page
+            is created.
+        </p>
+        <p>
+            If this property is <code>false</code>, PdxTree will assume that it is known that there are no children
+            for this node. The tree will not attempt to dynamically load children for a node which has the
+            <code>childList</code> property set to <code>false</code>.
+        </p>
+        <p>
+            If this property is <code>null</code>, PdxTree will attempt to load children for this node dynamically
+            when the node is expanded.
+        </p>
+        <p>
+            If this property is a promise, PdxTree will assume that a list of child nodes is currently being loaded,
+            and will monitor the promise. When the promise is resolved, PdxTree will re-render the list of child nodes.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>The <code>expanded</code> property</h3>
+        <p>
+            This property is used to track the expanded / collapsed state of the node. When this property is truthy,
+            PdxTree will render the children of the current node. When the property is falsey, the child nodes will
+            be removed from the DOM.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Nodes and node scope</h3>
+        <p>
+            PdxTree uses the element marked by the <code>pdx-tree-item</code> directive as a template for each item
+            in the tree. This element (and it's children) will be cloned, compiled, and interpolated to produce each
+            tree item. During this process, PdxTree creates a new (non-isolate) scope for each item.
+        </p>
+        <p>
+            The scope created by PdxTree for each item will have several properties assigned to it:
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Property name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>node</td>
+                        <td>
+                            This is the node represented by the current item. Any property of the node may be
+                            bound in the usual Angular way (e.g. <code>{{ node.name }}</code>).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>_pdxTreeNodeDepth</td>
+                        <td>
+                            This property will be set to the depth of the node in the tree. Nodes at the first level
+                            of the tree will have a depth of <code>1</code>, children of those nodes will have a
+                            depth of <code>2</code>, and so on. This property is useful in flat trees to determine
+                            an appropriate level of padding or indentation.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>_pdxTreeController</td>
+                        <td>
+                            This property is a reference to the controller function provided to the
+                            <code>pdx-tree-controller</code> attribute of the element with the <code>pdx-tree</code>
+                            directive bound to it. This property allows you to access the controller
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Directive list</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Directive</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><nobr>pdx-tree</nobr></td>
+                    <td>
+                        This directive wraps the template content for the tree, and indicates which element should be
+                        replaced by the tree content.
+                    </td>
+                </tr>
+                <tr>
+                    <td><nobr>pdx-tree-item</nobr></td>
+                    <td>
+                        This directive indicates the element which should be repeated for each item in the tree.
+                    </td>
+                </tr>
+                <tr>
+                    <td><nobr>pdx-tree-children</nobr></td>
+                    <td>
+                        This directive determines the tree's rendering mode and indicates which element should be used
+                        as the container for the children of a given node.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Attribute list</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Attribute name</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><nobr>pdx-tree-node-list</nobr></td>
+                    <td>Specifies the list of nodes the tree should render</td>
+                </tr>
+                <tr>
+                    <td><nobr>pdx-tree-controller</nobr></td>
+                    <td>Specifies the controller function for the tree</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
