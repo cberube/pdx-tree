@@ -15,6 +15,18 @@ angular
             }
         ]
     )
+    .run(
+        [
+            '$rootScope',
+            function($rootScope) {
+                $rootScope.$on('$locationChangeSuccess', function() {
+                    ga('send', 'pageview', {
+                        'page': location.pathname + location.search  + location.hash
+                    });
+                });
+            }
+        ]
+    )
     .directive(
         'includeSource',
         [
@@ -48,7 +60,6 @@ angular
                                     content,
                                     language,
                                     function(content) {
-                                        console.log(content);
                                         scope.element.append('<code>' + content + '</code>')
                                     }
                                 );
